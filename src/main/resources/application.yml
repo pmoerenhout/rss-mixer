@@ -1,0 +1,19 @@
+server:
+  servlet:
+    application-display-name: RSS Mixer for ZOOOM ZZP Woerden
+
+rss:
+  urls:
+    - http://www.zzpwoerden.nl/activiteiten/feed/
+    - http://www.zzpwoerden.nl/feed/
+
+---
+
+spring:
+    profiles: tomcat
+
+logging:
+  pattern:
+    console: ''
+  file: /var/log/kore/rssmixer.log
+  level: debug
