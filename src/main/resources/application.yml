@@ -15,5 +15,5 @@ spring:
 logging:
   pattern:
     console: ''
-  file: /var/log/kore/rssmixer.log
+  file: /var/log/tomcat/rss-mixer.log
   level: debug

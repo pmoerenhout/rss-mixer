@@ -24,12 +24,11 @@ public class Application extends SpringBootServletInitializer {
   @Bean
   public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
     return args -> {
-      LOG.info("Let's inspect the beans provided by Spring Boot:");
-
       final String[] beanNames = ctx.getBeanDefinitionNames();
+      LOG.debug("Let's inspect the beans provided by Spring Boot:");
       Arrays.sort(beanNames);
       for (final String beanName : beanNames) {
-        LOG.trace("Bean name: {}", beanName);
+        LOG.debug("Bean name: {}", beanName);
       }
     };
   }
