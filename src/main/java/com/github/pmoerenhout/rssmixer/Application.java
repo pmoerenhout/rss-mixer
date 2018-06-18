@@ -24,18 +24,14 @@ public class Application extends SpringBootServletInitializer {
   @Bean
   public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
     return args -> {
-      final String[] beanNames = ctx.getBeanDefinitionNames();
       LOG.debug("Let's inspect the beans provided by Spring Boot:");
-      Arrays.sort(beanNames);
-      for (final String beanName : beanNames) {
-        LOG.debug("Bean name: {}", beanName);
-      }
+      Arrays.asList(ctx.getBeanDefinitionNames()).stream().sorted().forEach(b -> LOG.debug("Bean name: {}", b));
     };
   }
 
   @Bean
   public CharacterEncodingFilter characterEncodingFilter() {
-    CharacterEncodingFilter filter = new CharacterEncodingFilter();
+    final CharacterEncodingFilter filter = new CharacterEncodingFilter();
     filter.setEncoding("UTF-8");
     filter.setForceEncoding(true);
     return filter;
