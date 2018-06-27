@@ -77,12 +77,15 @@ public class RssController {
   @ResponseBody
   public void getText(final HttpServletRequest request, final HttpServletResponse response)
       throws IOException, FeedException {
-//    final Enumeration<String> headerNames = request.getHeaderNames();
-//    while (headerNames.hasMoreElements()) {
-//      final String headerName = headerNames.nextElement();
-//      LOG.debug("Header {}: {}", headerName, request.getHeader(headerName));
-//    }
-    LOG.info("Handle request URL {} from {}", request.getRequestURL(), request.getHeader("X-Real-IP"));
+    LOG.info("Handle request URL {} with query {} from {}", request.getRequestURL(), request.getQueryString(), request.getHeader("X-Real-IP"));
+    if (LOG.isTraceEnabled()) {
+      final Enumeration<String> headerNames = request.getHeaderNames();
+      while (headerNames.hasMoreElements()) {
+        final String headerName = headerNames.nextElement();
+        LOG.trace("Header {}: {}", headerName, request.getHeader(headerName));
+      }
+    }
+
     final List<SyndFeed> feeds = rssService.getAllFeeds();
     final SyndFeed mergedFeed = rssService.merge(ROME_FEED_TYPE_RSS_2_0, feeds);
 
