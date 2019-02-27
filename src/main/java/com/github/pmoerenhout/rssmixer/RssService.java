@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -88,6 +89,12 @@ public class RssService {
     return entries.stream().filter(new Predicate<SyndEntry>() {
       @Override
       public boolean test(final SyndEntry syndEntry) {
+        if (StringUtils.contains(syndEntry.getTitle(), "12 april")) {
+          return false;
+        }
+        if (StringUtils.contains(syndEntry.getTitle(), "Laat je stem horen")) {
+          return false;
+        }
         return syndEntry.getPublishedDate().compareTo(maxDate) < 0;
       }
     }).collect(Collectors.toList());
