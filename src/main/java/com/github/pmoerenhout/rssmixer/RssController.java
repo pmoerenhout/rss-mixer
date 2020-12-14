@@ -26,7 +26,7 @@ import com.rometools.rome.io.SyndFeedOutput;
 @RestController
 public class RssController {
 
-  final private static Logger LOG = LoggerFactory.getLogger(RssController.class);
+  final private static Logger log = LoggerFactory.getLogger(RssController.class);
 
   final private static String ROME_FEED_TYPE_RSS_2_0 = "rss_2.0";
   final private static String ROME_FEED_TYPE_ATOM_1_0 = "atom_1.0";
@@ -40,14 +40,14 @@ public class RssController {
     final Enumeration<String> headerNames = request.getHeaderNames();
     while (headerNames.hasMoreElements()) {
       final String headerName = headerNames.nextElement();
-      LOG.debug("Header {}: {}", headerName, request.getHeader(headerName));
+      log.debug("Header {}: {}", headerName, request.getHeader(headerName));
     }
-    LOG.info("Handle request URL {} from {}", request.getRequestURL(), request.getHeader("X-Real-IP"));
+    log.info("Handle request URL {} from {}", request.getRequestURL(), request.getHeader("X-Real-IP"));
     final List<SyndFeed> feeds = rssService.getAllFeeds();
     final SyndFeed mergedFeed = rssService.merge(ROME_FEED_TYPE_RSS_2_0, feeds);
 
     for (final SyndEntry entry : mergedFeed.getEntries()) {
-      LOG.info("title:'{}' link:'{}'", entry.getTitle(), entry.getLink());
+      log.info("title:'{}' link:'{}'", entry.getTitle(), entry.getLink());
     }
 
     response.setContentType("application/rss+xml");
@@ -59,12 +59,12 @@ public class RssController {
   @RequestMapping(value = "/atom", method = RequestMethod.GET, produces = "application/atom+xml")
   public void getAtom(final HttpServletRequest request, final HttpServletResponse response)
       throws IOException, FeedException {
-    LOG.info("Handle request URL {} from {}", request.getRequestURL(), request.getHeader("X-Real-IP"));
+    log.info("Handle request URL {} from {}", request.getRequestURL(), request.getHeader("X-Real-IP"));
     final List<SyndFeed> feeds = rssService.getAllFeeds();
     final SyndFeed mergedFeed = rssService.merge(ROME_FEED_TYPE_ATOM_1_0, feeds);
 
     for (final SyndEntry entry : mergedFeed.getEntries()) {
-      LOG.info("title:'{}' link:'{}'", entry.getTitle(), entry.getLink());
+      log.info("title:'{}' link:'{}'", entry.getTitle(), entry.getLink());
     }
     response.setContentType("application/atom+xml");
 
@@ -72,17 +72,16 @@ public class RssController {
     output.output(mergedFeed, response.getWriter());
   }
 
-
   @RequestMapping(value = "/text", method = RequestMethod.GET, produces = "text/html")
   @ResponseBody
   public void getText(final HttpServletRequest request, final HttpServletResponse response)
       throws IOException, FeedException {
-    LOG.info("Handle request URL {} with query {} from {}", request.getRequestURL(), request.getQueryString(), request.getHeader("X-Real-IP"));
-    if (LOG.isTraceEnabled()) {
+    log.info("Handle request URL {} with query {} from {}", request.getRequestURL(), request.getQueryString(), request.getHeader("X-Real-IP"));
+    if (log.isTraceEnabled()) {
       final Enumeration<String> headerNames = request.getHeaderNames();
       while (headerNames.hasMoreElements()) {
         final String headerName = headerNames.nextElement();
-        LOG.trace("Header {}: {}", headerName, request.getHeader(headerName));
+        log.trace("Header {}: {}", headerName, request.getHeader(headerName));
       }
     }
 
@@ -100,7 +99,7 @@ public class RssController {
     printWriter.println("<table>");
     printWriter.println("<tr><th>Title</th><th>Link</th><th>Author</th><th>Published</th><th>Updated</th></tr>");
     for (final SyndEntry entry : mergedFeed.getEntries()) {
-      LOG.info("title:'{}' link:'{}' author:'{}' published:{} updated:{}", entry.getTitle(), entry.getLink(), entry.getAuthor(), entry.getPublishedDate(),
+      log.info("title:'{}' link:'{}' author:'{}' published:{} updated:{}", entry.getTitle(), entry.getLink(), entry.getAuthor(), entry.getPublishedDate(),
           entry.getUpdatedDate());
       printWriter.println("<tr>");
       printWriter.println(htmlTableData(entry.getTitle()));
