@@ -34,7 +34,7 @@
     <commons-text.version>1.10.0</commons-text.version>
     <commons-collections4.version>4.4</commons-collections4.version>
     <log4j2.version>2.19.0</log4j2.version>
-    <rome.version>1.18.0</rome.version>
+    <rome.version>2.0.0</rome.version>
   </properties>
 
   <dependencies>
